@@ -1,0 +1,207 @@
+.global _start
+
+.section .text
+    mov $root, %rax
+    cmpq $node_neg_13, (%rax)
+    jne bad_exit
+
+    movq $node_neg_13, %rax
+    cmpq $-13, (%rax)
+    jne bad_exit
+    cmpq $node_neg_14, 8(%rax)
+    jne bad_exit
+    cmpq $node_neg_5, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_14, %rax
+    cmpq $-14, (%rax)
+    jne bad_exit
+    cmpq $node_neg_15, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_5, %rax
+    cmpq $-5, (%rax)
+    jne bad_exit
+    cmpq $node_neg_12, 8(%rax)
+    jne bad_exit
+    cmpq $node_5, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_15, %rax
+    cmpq $-15, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_12, %rax
+    cmpq $-12, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $node_neg_8, 16(%rax)
+    jne bad_exit
+
+    movq $node_5, %rax
+    cmpq $5, (%rax)
+    jne bad_exit
+    cmpq $node_neg_3, 8(%rax)
+    jne bad_exit
+    cmpq $node_10, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_8, %rax
+    cmpq $-8, (%rax)
+    jne bad_exit
+    cmpq $node_neg_10, 8(%rax)
+    jne bad_exit
+    cmpq $node_neg_6, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_3, %rax
+    cmpq $-3, (%rax)
+    jne bad_exit
+    cmpq $node_neg_4, 8(%rax)
+    jne bad_exit
+    cmpq $node_4, 16(%rax)
+    jne bad_exit
+
+    movq $node_10, %rax
+    cmpq $10, (%rax)
+    jne bad_exit
+    cmpq $node_8, 8(%rax)
+    jne bad_exit
+    cmpq $node_15, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_10, %rax
+    cmpq $-10, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_6, %rax
+    cmpq $-6, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_neg_4, %rax
+    cmpq $-4, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_4, %rax
+    cmpq $4, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_8, %rax
+    cmpq $8, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $node_15, %rax
+    cmpq $15, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $new_node, 16(%rax)
+    jne bad_exit
+
+    movq $new_node, %rax
+    cmpq $18, (%rax)
+    jne bad_exit
+    cmpq $0, 8(%rax)
+    jne bad_exit
+    cmpq $0, 16(%rax)
+    jne bad_exit
+
+    movq $60, %rax
+    movq $0, %rdi
+    syscall
+
+bad_exit:
+    movq $60, %rax
+    movq $1, %rdi
+    syscall
+
+.section .data
+root: .quad node_neg_13
+node_neg_13:
+  .quad -13
+  .quad node_neg_14
+  .quad node_neg_5
+node_neg_14:
+  .quad -14
+  .quad node_neg_15
+  .quad 0
+node_neg_5:
+  .quad -5
+  .quad node_neg_12
+  .quad node_5
+node_neg_15:
+  .quad -15
+  .quad 0
+  .quad 0
+node_neg_12:
+  .quad -12
+  .quad 0
+  .quad node_neg_8
+node_5:
+  .quad 5
+  .quad node_neg_3
+  .quad node_10
+node_neg_8:
+  .quad -8
+  .quad node_neg_10
+  .quad node_neg_6
+node_neg_3:
+  .quad -3
+  .quad node_neg_4
+  .quad node_4
+node_10:
+  .quad 10
+  .quad node_8
+  .quad node_15
+node_neg_10:
+  .quad -10
+  .quad 0
+  .quad 0
+node_neg_6:
+  .quad -6
+  .quad 0
+  .quad 0
+node_neg_4:
+  .quad -4
+  .quad 0
+  .quad 0
+node_4:
+  .quad 4
+  .quad 0
+  .quad 0
+node_8:
+  .quad 8
+  .quad 0
+  .quad 0
+node_15:
+  .quad 15
+  .quad 0
+  .quad 0
+new_node: .quad 18, 0, 0
