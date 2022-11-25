@@ -1,0 +1,53 @@
+.global _start
+
+.section .text
+    mov $source, %rax
+    cmpb $208, 0(%rax)
+    jne bad_exit
+
+    cmpb $138, 1(%rax)
+    jne bad_exit
+
+    cmpb $87, 2(%rax)
+    jne bad_exit
+
+    cmpb $171, 3(%rax)
+    jne bad_exit
+
+    cmpb $240, 4(%rax)
+    jne bad_exit
+
+    cmpb $80, 5(%rax)
+    jne bad_exit
+
+    cmpb $129, 6(%rax)
+    jne bad_exit
+
+    cmpb $246, 7(%rax)
+    jne bad_exit
+
+    cmpb $161, 8(%rax)
+    jne bad_exit
+
+    cmpb $32, 9(%rax)
+    jne bad_exit
+
+    cmpb $177, 10(%rax)
+    jne bad_exit
+
+    cmpb $111, 11(%rax)
+    jne bad_exit
+
+    movq $60, %rax
+    movq $0, %rdi
+    syscall
+
+bad_exit:
+    movq $60, %rax
+    movq $1, %rdi
+    syscall
+
+.section .data
+num: .int 0
+source: .byte 208,138,87,171,240,80
+destination: .byte 129,246,161,32,177,111
