@@ -6,51 +6,84 @@ _start:
 
     # set initial pointer
 
-    # if num < 0 => offset = |num|, dir = -1
-    # else => offset = 0, dir = 1
 
-    #num = %eax . 
-    #source = %rbx .
-    #offset = %ecx .
-    #dir = %edx .
-    #dest= %rdi .
-    #iterator = %rsi .'
+    #num = %eax
+
+    # srcptr = %ecx
+    # srcdir = %edx
+
+    # destptr = %esi
+    # destdir = %r8
+    # reverse/negative flag = %r10b
     
+    mov $0, %rax
     mov (num), %eax
-    cmpl $0, %eax
-    jge .L1 # if num >= 0, jump to .L1
+    mov $0, %r10b
+    cmp $0, %eax
+    jge .numPositive # if num >= 0, jump to .numPositive
 
     # make num positive
     xor $0xFFFFFFFF, %eax
-    addl $1, %eax 
+    add $1, %eax 
+    # set negative flag
+    mov $1, %r10b
 
-    # set offset
-    movl %eax, %ecx
+.numPositive:
+    mov $destination, %rbx
+    sub $source, %rbx
+    cmp $0, %rbx 
+    jl .positiveNotOverLapping
+    cmpq %rax, %rbx
+    jge .positiveNotOverLapping
+    # otherwise overlapping
+    mov %eax, %ecx
     dec %ecx
-    # set dir
     movl $-1, %edx
-    # num already positive, set offset to 0
+    movl %eax, %esi
+    dec %esi
+    movl $-1, %r8d
+    jmp loop_start
 
-    jmp .L2
-.L1:
-    movl $0,%ecx
-    movl $1,%edx
-   
-.L2:
-    # iterate over source and move to dest
-    movl $0, %esi
+.positiveNotOverLapping:
+    mov $0, %ecx
+    mov $1, %edx
+    mov $0, %esi
+    mov $1, %r8d
+    jmp loop_start
 
 loop_start:
-    cmp %esi, %eax
+    mov $0, %r9d
+loop:
+    cmp %r9d, %eax
     je loop_end
     
     movb source(%ecx), %bl
     movb %bl, destination(%esi)
-    inc %esi
+    addl %r8d, %esi
     addl %edx, %ecx
+    addl $1, %r9d
 
-    jmp loop_start
+    jmp loop
     
 loop_end:
+
+    cmp $0, %r10b
+    je .end
+    # reverse n bytes of destination
+    mov $0, %r9d
+    dec %eax
+reverse_loop:
+    cmp %r9d, %eax
+    jle .end
+    movb destination(%r9d), %bl
+    movb destination(%eax), %bh
+    movb %bl, destination(%eax)
+    shr $8, %bx
+    movb %bl, destination(%r9d)
+    addl $1, %r9d
+    decl %eax
+    jmp reverse_loop
+
+.end:
 
     
