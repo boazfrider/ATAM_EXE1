@@ -18,18 +18,17 @@ _start:
 
     mov (head), %rsi
     movq $0, %rdi # pointer for prev.
+    movslq (val), %r10
     
 .iterateOverList:
 
-    movslq (val), %r10
     cmpq %r10, (%rsi)
     jne .nextNode
 
     inc %r9
     cmpq $2, %r9
     jg .end
-    cmpq $1, %r9
-    jne .secondOccurence
+    je .secondOccurence
 # first occurance
     movq %rdi, %rax
     movq %rsi, %rcx
@@ -52,12 +51,23 @@ _start:
     cmp $2, %r9
     jne .end
 .swap:
-    movq %rdx, 8(%rax) 
+    cmpq $0, %rax
+    je .skipFirst
+    movq %rdx, 8(%rax)
+    jmp .notFirst
+
+.skipFirst: 
+    movq %rdx, (head)
+
+.notFirst:
     movq %rcx, 8(%rbx)
+
+.adjacent:
     movq 8(%rdx), %r10
     movq 8(%rcx), %r11
     movq %r10, 8(%rcx)
     movq %r11, 8(%rdx)
+
 
 .end:
 
