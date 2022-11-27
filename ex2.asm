@@ -2,7 +2,7 @@
 
 .section .text
 _start:
-    # set up loop
+    # set up loop_HW1
 
     # set initial pointer
 
@@ -20,7 +20,7 @@ _start:
     mov (num), %eax
     mov $0, %r10b
     cmp $0, %eax
-    jge .numPositive # if num >= 0, jump to .numPositive
+    jge .numPositive_HW1 # if num >= 0, jump to .numPositive
 
     # make num positive
     xor $0xFFFFFFFF, %eax
@@ -28,13 +28,13 @@ _start:
     # set negative flag
     mov $1, %r10b
 
-.numPositive:
+.numPositive_HW1:
     mov $destination, %rbx
     sub $source, %rbx
     cmp $0, %rbx 
-    jl .positiveNotOverLapping
+    jl .positiveNotOverLapping_HW1
     cmpq %rax, %rbx
-    jge .positiveNotOverLapping
+    jge .positiveNotOverLapping_HW1
     # otherwise overlapping
     mov %eax, %ecx
     dec %ecx
@@ -42,20 +42,20 @@ _start:
     movl %eax, %esi
     dec %esi
     movl $-1, %r8d
-    jmp loop_start
+    jmp loop_start_HW1
 
-.positiveNotOverLapping:
+.positiveNotOverLapping_HW1:
     mov $0, %ecx
     mov $1, %edx
     mov $0, %esi
     mov $1, %r8d
-    jmp loop_start
+    jmp loop_start_HW1
 
-loop_start:
+loop_start_HW1:
     mov $0, %r9d
-loop:
+loop_HW1:
     cmp %r9d, %eax
-    je loop_end
+    je loop_end_HW1
     
     movb source(%ecx), %bl
     movb %bl, destination(%esi)
@@ -63,18 +63,18 @@ loop:
     addl %edx, %ecx
     addl $1, %r9d
 
-    jmp loop
+    jmp loop_HW1
     
-loop_end:
+loop_end_HW1:
 
     cmp $0, %r10b
-    je .end
+    je .end_HW1
     # reverse n bytes of destination
     mov $0, %r9d
     dec %eax
-reverse_loop:
+reverse_loop_HW1:
     cmp %r9d, %eax
-    jle .end
+    jle .end_HW1
     movb destination(%r9d), %bl
     movb destination(%eax), %bh
     movb %bl, destination(%eax)
@@ -82,8 +82,8 @@ reverse_loop:
     movb %bl, destination(%r9d)
     addl $1, %r9d
     decl %eax
-    jmp reverse_loop
+    jmp reverse_loop_HW1
 
-.end:
+.end_HW1:
 
     

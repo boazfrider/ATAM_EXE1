@@ -14,29 +14,29 @@ _start:
     movq $root, %rdx
 # prev node - rdx
 
-.recursive:
+.recursive_HW1:
     cmpq $0, %rdi
-    jne .treeNotNULL
+    jne .treeNotNULL_HW1
     movq $new_node, (%rdx)
-    jmp .done
+    jmp .done_HW1
 
-.treeNotNULL:
+.treeNotNULL_HW1:
 #while current node not null
 
     movq (%rdi), %rax #current node.
     cmpq (%rsi), %rax #compare new node to current node
-    jg .travel_left
-    jl .travel_right
-    jmp .done #if equal
+    jg .travel_left_HW1
+    jl .travel_right_HW1
+    jmp .done_HW1 #if equal
 
-.travel_left:
+.travel_left_HW1:
     lea 8(%rdi), %rdx #save current node as prev node
     movq 8(%rdi), %rdi
-    jmp .recursive
-.travel_right:
+    jmp .recursive_HW1
+.travel_right_HW1:
     lea 16(%rdi), %rdx #save current node as prev node
     movq 16(%rdi), %rdi
-    jmp .recursive
+    jmp .recursive_HW1
 
-.done:
+.done_HW1:
 

@@ -20,55 +20,55 @@ _start:
     movq $0, %rdi # pointer for prev.
     movslq (val), %r10
     
-.iterateOverList:
+.iterateOverList_HW1:
 
     cmpq %r10, (%rsi)
-    jne .nextNode
+    jne .nextNode_HW1
 
     inc %r9
     cmpq $2, %r9
-    jg .end
-    je .secondOccurence
+    jg .end_HW1
+    je .secondOccurence_HW1
 # first occurance
     movq %rdi, %rax
     movq %rsi, %rcx
-    jmp .nextNode
+    jmp .nextNode_HW1
     
-.secondOccurence:
+.secondOccurence_HW1:
     movq %rdi, %rbx
     movq %rsi, %rdx
-    jmp .nextNode
+    jmp .nextNode_HW1
 
 # move to the next node
 
-.nextNode:
+.nextNode_HW1:
     movq %rsi, %rdi
     movq 8(%rsi), %rsi
     cmpq $0, %rsi
-    jne .iterateOverList
+    jne .iterateOverList_HW1
 
 
     cmp $2, %r9
-    jne .end
-.swap:
+    jne .end_HW1
+.swap_HW1:
     cmpq $0, %rax
-    je .skipFirst
+    je .skipFirst_HW1
     movq %rdx, 8(%rax)
-    jmp .notFirst
+    jmp .notFirst_HW1
 
-.skipFirst: 
+.skipFirst_HW1: 
     movq %rdx, (head)
 
-.notFirst:
+.notFirst_HW1:
     movq %rcx, 8(%rbx)
 
-.adjacent:
+.adjacent_HW1:
     movq 8(%rdx), %r10
     movq 8(%rcx), %r11
     movq %r10, 8(%rcx)
     movq %r11, 8(%rdx)
 
 
-.end:
+.end_HW1:
 
     
